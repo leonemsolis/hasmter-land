@@ -7,9 +7,9 @@ public class EarthController : MonoBehaviour
     private Vector3 lastMousePosition = Vector3.zero;
     private Vector3 mousePositionDelta = Vector3.zero;
 
-    [SerializeField] float ROTATE_SPEED = 50f;
-    private const float ZOOM_MAX = -0.696f;
-    private const float ZOOM_MIN = -1.308f;
+    float ROTATE_SPEED = 90f;
+    private const float ZOOM_MAX = -60.5f;
+    private const float ZOOM_MIN = -104.5f;
 
     private void Update()
     {
@@ -44,23 +44,24 @@ public class EarthController : MonoBehaviour
             float currentMagnitude = (touchZero.position - touchOne.position).magnitude;
 
             float distance = currentMagnitude - prevMagnitude;
-            value = distance * 0.01f;
+            value = distance * 0.001f;
         }
 #endif
+        Debug.Log(value);
         if (value > 0)
         {
-            if (Camera.main.transform.localPosition.z > ZOOM_MAX)
+            if (Camera.main.transform.position.z > ZOOM_MAX)
             {
                 return;
             }
         }
         else
         {
-            if (Camera.main.transform.localPosition.z < ZOOM_MIN)
+            if (Camera.main.transform.position.z < ZOOM_MIN)
             {
                 return;
             }
         }
-        Camera.main.transform.localPosition += new Vector3(0f, 0f, value);
+        Camera.main.transform.position += new Vector3(0f, 0f, value);
     }
 }
