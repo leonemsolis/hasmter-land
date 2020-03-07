@@ -11,6 +11,7 @@ public class EarthController : MonoBehaviour
     private const float ZOOM_MAX = -60.5f;
     private const float ZOOM_MIN = -132.8f;
     bool lockMovement = false;
+    
     private void Update()
     {
         if(Input.touchCount > 1) {
