@@ -10,16 +10,7 @@ public class Attractor : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    private void FixedUpdate() {
-        ObjectToAttract[] otas = FindObjectsOfType<ObjectToAttract>();
-        foreach(ObjectToAttract ota in otas) {
-            Attract(ota);
-        }    
-    }
-
-    void Attract(ObjectToAttract objectToAttract) {
-        Rigidbody rbToAttract = objectToAttract.GetRigidbody();
-
+    public void Attract(Rigidbody rbToAttract) {
         Vector3 direction = rb.position - rbToAttract.position;
         float distance = direction.magnitude;
 
