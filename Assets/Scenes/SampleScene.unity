@@ -3942,6 +3942,8 @@ GameObject:
   - component: {fileID: 1385858344}
   - component: {fileID: 1385858345}
   - component: {fileID: 1385858346}
+  - component: {fileID: 1385858348}
+  - component: {fileID: 1385858347}
   m_Layer: 0
   m_Name: Car
   m_TagString: Untagged
@@ -3956,8 +3958,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1385858343}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0204, y: 0.4169, z: -0.2813}
+  m_LocalRotation: {x: -0.25002468, y: -0, z: 1.5279511e-10, w: 0.9682395}
+  m_LocalPosition: {x: -0.0204, y: 0.462, z: -0.3062}
   m_LocalScale: {x: 0.0010000007, y: 0.0009999999, z: -0.0010000003}
   m_Children:
   - {fileID: 556215878}
@@ -3969,7 +3971,7 @@ Transform:
   - {fileID: 1853538098}
   m_Father: {fileID: 1895437929}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -28.958002, y: 0, z: 0}
 --- !u!65 &1385858345
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3983,7 +3985,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 14.07, y: 8.673129, z: 18.666235}
   m_Center: {x: 0, y: 3.753618, z: 0.9874807}
---- !u!114 &1385858346
+--- !u!54 &1385858346
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1385858343}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
+--- !u!114 &1385858347
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3992,7 +4010,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1385858343}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b442ad0c8a7b74e73b10222db9627b15, type: 3}
+  m_Script: {fileID: 11500000, guid: 4b1fe956deee64551b29b7e061b82472, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1385858348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1385858343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f15e8e6c07da346299ee712ead351ae8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1489184705
@@ -4686,6 +4716,7 @@ GameObject:
   - component: {fileID: 1895437927}
   - component: {fileID: 1895437926}
   - component: {fileID: 1895437930}
+  - component: {fileID: 1895437931}
   m_Layer: 0
   m_Name: Earth
   m_TagString: earth
@@ -4781,6 +4812,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e17ded321f2546e1ba1a747ea577041, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1895437931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1895437925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6dab178929684c0c841f51d7e220b7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gravity: -10
 --- !u!1 &1971208457
 GameObject:
   m_ObjectHideFlags: 0
