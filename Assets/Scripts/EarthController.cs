@@ -8,10 +8,19 @@ public class EarthController : MonoBehaviour
     private Vector3 mousePositionDelta = Vector3.zero;
 
     float ROTATE_SPEED = 70f;
-    private const float ZOOM_MAX = -60.5f;
-    private const float ZOOM_MIN = -132.8f;
+    const float ZOOM_MAX = 140f;
+    const float ZOOM_MIN = 68f;
     bool lockMovement = false;
     
+    private Transform cam;
+
+    private void Start() {
+        cam = Camera.main.transform;
+        Vector3 targetDirection = (cam.position - transform.position).normalized;
+        Vector3 camForward = -cam.forward;
+        cam.rotation = Quaternion.FromToRotation(camForward, targetDirection) * cam.rotation;
+    }
+
     private void Update()
     {
         if(Input.touchCount > 1) {
@@ -33,16 +42,19 @@ public class EarthController : MonoBehaviour
         if(Input.touchCount < 2) {
             float rotationX = Input.GetAxis("Mouse X") * ROTATE_SPEED * Mathf.Deg2Rad;
             float rotationY = Input.GetAxis("Mouse Y") * ROTATE_SPEED * Mathf.Deg2Rad;
-            transform.Rotate(Camera.main.transform.up, -rotationX, Space.World);
-            transform.Rotate(Camera.main.transform.right, rotationY, Space.World);
+            cam.RotateAround(transform.position, cam.up, rotationX);
+            cam.RotateAround(transform.position, cam.right, -rotationY);
+            // transform.Rotate(Camera.main.transform.up, -rotationX, Space.World);
+            // transform.Rotate(Camera.main.transform.right, rotationY, Space.World);
         }
     }
 
     private void Zoom()
     {
+        Debug.Log(Vector3.Distance(transform.position, cam.position));
         float zoomValue = 0;
 #if UNITY_EDITOR
-        zoomValue = Input.GetAxis("Mouse ScrollWheel");
+        zoomValue = Input.GetAxis("Mouse ScrollWheel") * 3f;
 #else
         if (Input.touchCount == 2)
         {
@@ -59,20 +71,22 @@ public class EarthController : MonoBehaviour
             zoomValue = distance * 0.07f;
         }
 #endif
-        if (zoomValue > 0)
+        if (zoomValue < 0)
         {
-            if (Camera.main.transform.localPosition.z > ZOOM_MAX)
+            if (Vector3.Distance(transform.position, cam.position) > ZOOM_MAX)
             {
                 return;
             }
         }
         else
         {
-            if (Camera.main.transform.localPosition.z < ZOOM_MIN)
+            if (Vector3.Distance(transform.position, cam.position) < ZOOM_MIN)
             {
                 return;
             }
         }
-        Camera.main.transform.localPosition += new Vector3(0f, 0f, zoomValue);
+        // cam.localPosition += new Vector3(0f, 0f, zoomValue);
+        cam.position += cam.forward * zoomValue;
+        
     }
 }
