@@ -11,7 +11,7 @@ public class GravityBody : MonoBehaviour
         earth = FindObjectOfType<EarthAttractor>();
     }
 
-    private void FixedUpdate() {
+    private void LateUpdate() {
         earth.Attract(transform);
     }
 }

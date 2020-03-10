@@ -44,17 +44,19 @@ public class EarthController : MonoBehaviour
             float rotationY = Input.GetAxis("Mouse Y") * ROTATE_SPEED * Mathf.Deg2Rad;
             cam.RotateAround(transform.position, cam.up, rotationX);
             cam.RotateAround(transform.position, cam.right, -rotationY);
-            // transform.Rotate(Camera.main.transform.up, -rotationX, Space.World);
-            // transform.Rotate(Camera.main.transform.right, rotationY, Space.World);
         }
     }
 
     private void Zoom()
     {
-        Debug.Log(Vector3.Distance(transform.position, cam.position));
-        float zoomValue = 0;
+        float zoomValue = 0f;
+        float rotationAngle = 0f;
 #if UNITY_EDITOR
-        zoomValue = Input.GetAxis("Mouse ScrollWheel") * 3f;
+        if(Input.GetKey(KeyCode.LeftCommand)) {
+            rotationAngle = Input.GetAxis("Mouse ScrollWheel") * 3f;
+        } else {
+            zoomValue = Input.GetAxis("Mouse ScrollWheel") * 3f;
+        }
 #else
         if (Input.touchCount == 2)
         {
@@ -69,6 +71,10 @@ public class EarthController : MonoBehaviour
 
             float distance = currentMagnitude - prevMagnitude;
             zoomValue = distance * 0.07f;
+
+            float turnAngle = Angle(touchZero.position, touchOne.position);
+			float prevTurn = Angle(touchZero.position - touchZero.deltaPosition, touchOne.position - touchOne.deltaPosition);
+			rotationAngle = Mathf.DeltaAngle(prevTurn, turnAngle);
         }
 #endif
         if (zoomValue < 0)
@@ -85,8 +91,21 @@ public class EarthController : MonoBehaviour
                 return;
             }
         }
-        // cam.localPosition += new Vector3(0f, 0f, zoomValue);
         cam.position += cam.forward * zoomValue;
-        
+        cam.RotateAround(cam.position, (cam.position - transform.position).normalized, rotationAngle);
     }
+
+    private float Angle (Vector2 pos1, Vector2 pos2) {
+		Vector2 from = pos2 - pos1;
+		Vector2 to = new Vector2(1, 0);
+ 
+		float result = Vector2.Angle( from, to );
+		Vector3 cross = Vector3.Cross( from, to );
+ 
+		if (cross.z > 0) {
+			result = 360f - result;
+		}
+ 
+		return result;
+	}
 }
