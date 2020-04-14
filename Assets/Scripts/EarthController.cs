@@ -30,7 +30,7 @@ public class EarthController : MonoBehaviour
                 }
             }
         }
-        Zoom();
+        ZoomRotate();
     }
 
     private void OnMouseDrag()
@@ -47,7 +47,7 @@ public class EarthController : MonoBehaviour
         }
     }
 
-    private void Zoom()
+    private void ZoomRotate()
     {
         float zoomValue = 0f;
         float rotationAngle = 0f;
@@ -77,6 +77,7 @@ public class EarthController : MonoBehaviour
 			rotationAngle = Mathf.DeltaAngle(prevTurn, turnAngle);
         }
 #endif
+        cam.RotateAround(cam.position, (cam.position - transform.position).normalized, rotationAngle);
         if (zoomValue < 0)
         {
             if (Vector3.Distance(transform.position, cam.position) > ZOOM_MAX)
@@ -91,8 +92,7 @@ public class EarthController : MonoBehaviour
                 return;
             }
         }
-        cam.position += cam.forward * zoomValue;
-        cam.RotateAround(cam.position, (cam.position - transform.position).normalized, rotationAngle);
+        cam.position += cam.TransformDirection(new Vector3(0f, .5f, 1f)) * zoomValue;
     }
 
     private float Angle (Vector2 pos1, Vector2 pos2) {

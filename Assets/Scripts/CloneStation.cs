@@ -4,19 +4,27 @@ using UnityEngine;
 
 public class CloneStation : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+
+    [SerializeField] private Transform cameraPosition;
+    private Vector3 originPosition;
+    private Quaternion originRotation;
+    private Camera cam;
+
+    private void Start() {
+        cam = Camera.main;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void OnMouseDown() {
+    public void Open() {
         FindObjectOfType<CloneStationPanel>().Open();
+        originPosition = cam.transform.position;
+        originRotation = cam.transform.rotation;
+        cam.transform.position = cameraPosition.position;
+        cam.transform.rotation = cameraPosition.rotation;
+    }
+
+    public void Close() {
+        FindObjectOfType<CloneStationPanel>().Close();
+        cam.transform.position = originPosition;
+        cam.transform.rotation = originRotation;
     }
 }

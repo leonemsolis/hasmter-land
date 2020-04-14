@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EarthAttractor : MonoBehaviour
 {
-    private const float gravity = -100f;
+    private const float gravity = -10f;
 
     public void Attract(Transform body) {
         Vector3 targetDirection = (body.position - transform.position).normalized;

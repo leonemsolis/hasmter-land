@@ -6,22 +6,38 @@ using TMPro;
 public class CloneStationPanel : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI costText;
-    [SerializeField] TextMeshProUGUI nextSpeedText;
+    [SerializeField] TextMeshProUGUI productionText;
     [SerializeField] TextMeshProUGUI currentSpeedText;
     [SerializeField] TextMeshProUGUI currentLevelText;
 
     CanvasGroup thisGroup;
     StatusBar statusBar;
 
-    int nextLevel = 2;
-    float cost = 2f;
-    float nextSpeed = .2f;
+    int currentLevel = 1;
+
+    float cost;
+    private const float BASE_COST = 20f;
+    private const float BASE_COST_MULT = 1.05f;
+    
+    float production;
+    private const float BASE_PROD = 1.2f;
+    private const float BASE_PROD_MULT = 1.1f;
 
     void Start()
     {
+        CalculateCost();
+        CalculateProduction();   
         thisGroup = GetComponent<CanvasGroup>();  
         statusBar = FindObjectOfType<StatusBar>();
         Close();
+    }
+
+    private void CalculateCost() {
+        cost = BASE_COST * Mathf.Pow(BASE_COST_MULT, currentLevel);
+    }
+
+    private void CalculateProduction() {
+        production = BASE_PROD * BASE_PROD_MULT * currentLevel;
     }
 
     public void Open() {
@@ -35,13 +51,13 @@ public class CloneStationPanel : MonoBehaviour
     }
 
     public void Upgrade() {
-        if(statusBar.UpgradeCloneMachine(cost, nextSpeed)) {
-            currentLevelText.SetText("LEVEL "+nextLevel);
-            nextLevel++;
-            cost = Mathf.Pow(nextLevel + 9, 2) / 35f;
+        if(statusBar.UpgradeCloneMachine(cost, production)) {
+            currentLevelText.SetText("LEVEL "+currentLevel);
+            currentLevel++;
+            cost = Mathf.Pow(currentLevel + 9, 2) / 35f;
             costText.SetText(Mathf.Ceil(cost).ToString());
-            nextSpeed = nextLevel * .1f;
-            nextSpeedText.SetText(System.Math.Round(nextSpeed, 2).ToString() + "/ S");
+            production = currentLevel * .1f;
+            productionText.SetText(System.Math.Round(production, 2).ToString() + "/ S");
             currentSpeedText.SetText(System.Math.Round(statusBar.GetCurrentSpeed(), 2).ToString()+" / S");
         }
     }
